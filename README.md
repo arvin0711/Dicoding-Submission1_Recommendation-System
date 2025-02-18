@@ -15,8 +15,10 @@ Sistem rekomendasi film memiliki potensi untuk memberikan manfaat signifikan bag
 
 
 ### Solution Statements
-1. Menggunakan 
-2. 
+1. Membangun Model Rekomendasi dengan dua pendekatan yaitu:
+- Content-Based Filtering: Menggunakan genre film dan fitur terkait untuk merekomendasikan film berdasarkan kesamaan konten dengan film yang sudah ditonton oleh pengguna.
+- Collaborative Filtering: Membangun model berbasis jaringan saraf yang menggunakan embedding layer untuk menyarankan film yang belum pernah ditonton pengguna berdasarkan pola rating yang telah diberikan pengguna.
+2. Menggunakan metrik evaluasi Precision untuk model dengan pendekatan Content-Based Filtering dan RMSE (Root Mean Squared Error) untuk model Collaborative Filtering guna mengukur kualitas rekomendasi yang diberikan oleh masing-masing model.
 
 
 ## Data Understanding
