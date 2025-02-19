@@ -92,20 +92,48 @@ Setelah melakukan normalisasi data, tahap berikutnya adalah pembuatan urutan dat
 
 
 ## Evaluation
-Setelah memperoleh hasil prediksi dari model yang telah dibangun. Perlu dilakukan 
-evaluasi kinerja model. Hal ini bertujuan untuk menillai seberapa akurat model yang telah 
-dibuat dalam memprediksi data. Berikut ini beberapa metrik evaluasi kinerja yang digunakan 
-untuk menilai seberapa baik peramalan yang dihasilkan:
-1. Mean Square Error (MSE)
+Pada tahap ini dilakukan evaluasi terhadap hasil rekomendasi yang dihasilkan oleh model.
+Hal ini bertujuan untuk menillai seberapa akurat model yang telah 
+dibuat dalam memberikan rekomendasi. Untuk sistem rekomendasi dengan pendekatan Content Based Filtering menggunakan metrik evaluasi precision:
+1. Precision
 
-Mean Square Error (MSE) merupakan salah satu metrik evaluasi yang umum 
-digunakan untuk mengukur seberapa baik model memprediksi nilai tertentu. MSE didapatkan 
+Precision adalah metrik evaluasi yang digunakan untuk mengukur seberapa relevan film yang direkomendasikan dibandingkan dengan jumlah total film yang direkomendasikan. Precision dihitung sebagai rasio antara jumlah film yang relevan dengan jumlah total film yang diberikan dalam daftar rekomendasi. Precision bernilai 1.0 jika semua film yang direkomendasikan memiliki minimal satu genre yang sama dengan film target pengguna, sehingga seluruh rekomendasi dianggap relevan. Precision yang lebih tinggi menunjukkan bahwa sistem rekomendasi lebih akurat dalam memberikan saran yang sesuai dengan preferensi pengguna.
+
+Rumus Precision dalam sistem rekomendasi film adalah sebagai berikut:
+
+$$
+Precision = \frac{|Relevant_Movies \cap Recommended_Movies|}{|Recommended_Movies|}
+$$
+
+Di mana:
+
+- **Relevant_Movies** = Daftar film yang benar-benar relevan dengan preferensi pengguna.
+- **Recommended_Movies** = Daftar film yang direkomendasikan oleh sistem.
+
+
+Analisis Hasil Evaluasi Rekomendasi Content Based Filtering:
+
+- Hasil rekomendasi untuk film berjudul Dish, The (2001)
+  
+  ![image](https://github.com/user-attachments/assets/f3a4ff39-9398-4601-a6b2-1602832db9ab)
+  
+  ![image](https://github.com/user-attachments/assets/12c7036f-cf7f-49d6-90bf-12c8ba5ef33f)
+  
+Dalam contoh ini, precision bernilai 1.0, yang berarti semua 10 film rekomendasi memiliki minimal satu genre yang sama dengan film "Dish, The (2001)" yaitu genre Comedy, sehingga hasilnya sempurna.
+
+
+Sedangkan untuk sistem rekomendasi dengan pendekatan Collaborative Filtering menggunakan metrik evaluasi Root Mean Square Error (RMSE):
+1. Root Mean Square Error (RMSE)
+
+Root Mean Square Error (MSE) merupakan salah satu metrik evaluasi yang umum 
+digunakan untuk mengukur seberapa baik model memprediksi nilai tertentu. RMSE didapatkan 
 dengan cara mengukur hasil akar dari rata-rata perbedaan kuadrat antara nilai aktual (y) dan 
-nilai hasil prediksi (y). Rumus MSE dapat dinyatakan sebagai berikut:
+nilai hasil prediksi (y). Rumus RMSE dapat dinyatakan sebagai berikut:
 
-   $$
-   MSE = \frac{1}{n} \sum_{i=1}^{n} (x_i - f_i)^2
-   $$
+$$
+RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - f_i)^2}
+$$
+
 
 Di mana
 
@@ -116,32 +144,39 @@ xi= Nilai prediksi pada periode ke-i
 fi = Nilai actual indeks pada periode ke-i
 
 
-Analisis Hasil Evaluasi:
+Analisis Hasil Evaluasi Sistem Rekomendasi Collaborative Filtering :
 
-- MSE (Mean Squared Error): BiGRU memiliki nilai MSE yang lebih rendah dibandingkan BiLSTM, menunjukkan bahwa model ini menghasilkan error yang lebih kecil.
+![image](https://github.com/user-attachments/assets/4f229875-a001-4c90-bbe5-296deeda00fa)
+
+- Berdasarkan plot grafik tersebut, proses training model cukup smooth dan model konvergen pada epoch sekitar 8.
+
+![image](https://github.com/user-attachments/assets/fa90674f-dd75-4c11-8ffe-43600ee85951)
+
+- Nilai error RMSE akhir pada data training sebesar 0.2023 dan error RMSE pada data validasi sebesar 0.2037. Nilai ini menunjukkan bahwa model memiliki generalisasi yang baik karena perbedaan error antara training dan validasi sangat kecil. 
+- Nilai RMSE yang rendah ini mengindikasikan bahwa rata-rata selisih antara prediksi model dan nilai rating asli cukup kecil, sehingga model dapat memberikan rekomendasi yang cukup akurat. Selain itu, tidak terdapat indikasi overfitting karena kurva training dan validasi berjalan sejajar tanpa ada kesenjangan yang signifikan.
 
 
 ### Dampak terhadap Business Understanding
 
-Model prediksi harga saham yang dikembangkan memiliki dampak signifikan terhadap pemahaman bisnis, terutama dalam pengambilan keputusan investasi. Berikut adalah beberapa aspek utama dampaknya:
+Sistem rekomendasi film yang dikembangkan memiliki dampak signifikan terhadap pemahaman bisnis, terutama dalam hal meningkatkan pengalaman pengguna di platform streaming. Berikut adalah beberapa aspek utama dampaknya:
 
 1. Menjawab Problem Statement dan Mencapai Goals
 
-- Model yang dikembangkan mampu memprediksi harga saham berdasarkan data historis dengan tingkat akurasi yang baik, membantu investor dalam membuat keputusan lebih tepat.
+- Sistem rekomendasi film dengan pendekatan Content Based Filtering berhasil memberikan Top-N rekomendasi film berdasarkan genre favorit pengguna.
 
-- Penggunaan BiLSTM dan BiGRU menunjukkan bahwa deep learning efektif dalam memprediksi harga saham, metrik evaluasi menunjukkan bahwa BiGRU lebih optimal dengan error yang lebih rendah dan nilai R² yang lebih tinggi
+- Sistem rekomendasi film dengan pendekatan Collaborative Filtering berhasil memberikan rekomendasi film yang belum pernah ditonton oleh pengguna berdasarkan rating yang telah diberikan.
   
-- Variabel fitur Open, High, dan Low memiliki pengaruh besar terhadap variabel target Close (mendekati 1) dalam prediksi harga saham. Sementara itu, variabel fitur Volume menunjukkan korelasi yang rendah dengan variabel Close (0,40) yang menunjukkan bahwa perubahan harga tidak selalu berkaitan dengan jumlah volume perdagangan.
+- Berdasarkan evaluasi menggunakan metrik Precision pada sistem rekomendasi Content Based Filterting dan RMSE pada sistem rekomendasi Collaborative Filtering menunjukkan bahwa kedua model sistem rekomendasi memiliki kinerja yang baik dalam memberikan rekomendasi yang relevan dan akurat, serta memenuhi tujuan untuk memberikan rekomendasi film yang lebih personal dan sesuai dengan preferensi pengguna.
+
 
 2. Dampak dari Solusi Statement
 
-- Penggunaan BiLSTM dan BiGRU membuktikan bahwa deep learning dapat menangkap pola harga saham dengan baik, memberikan metode yang lebih canggih dibandingkan pendekatan konvensional.
+- Sistem Rekomendasi dengan pendeketan Content Based Filtering dan Collaborative Filtering keduanya berhasil memberikan hasil rekomendasi yang akurat dan relevan yang dibuktikan dengan nilai Evaluasi menggunakan metrik Precision untuk Content-Based Filtering dan RMSE untuk Collaborative Filtering menunjukkan nilai yang sangat baik.
 
-- Hasil tuning hyperparameter yang dilakukan berhasil meningkatkan kinerja model secara signifikan, menjadikan model lebih akurat dan andal.
+- Dengan adanya sistem rekomendasi film ini, dapat dijadikan pertimbangan bagi pihak platform streaming film dalam meningkatkan pengalaman pengguna dengan cara yang lebih personal dan menyenangkan sehingga mendorong pengguna untuk lebih lama bertahan di platform dan memperbesar peluang peningkatan engagement.
 
-- Model yang dikembangkan dapat menjadi acuan bagi investor dan analis dalam pengambilan keputusan bisnis terkait investasi saham, sehingga dapat meminimalkan risiko dan memaksimalkan keuntungan.
 ## Kesimpulan
-Berdasarkan hasil evaluasi, model algoritma BiGRU dipilih sebagai model terbaik untuk memprediksi harga saham. Hal ini didasarkan pada metrik evaluasi yang menunjukkan bahwa BiGRU memiliki error yang lebih rendah (MSE, MAE, dan MAPE) serta nilai R² yang lebih tinggi dibandingkan BiLSTM. Selain itu, BiGRU lebih efisien dalam proses pelatihan dibandingkan BiLSTM, sehingga lebih optimal untuk digunakan dalam peramalan harga saham.
+Model dengan pendekatan Content-Based Filtering dan Collaborative Filtering mampu memberikan rekomendasi yang relevan dengan baik kepada pengguna. Content-Based Filtering lebih fokus pada kesamaan genre film yang sudah ditonton pengguna, sementara Collaborative Filtering berbasis jaringan saraf, memanfaatkan pola rating dari pengguna lain untuk menyarankan film yang belum pernah ditonton. Kedua pendekatan ini memberikan nilai tambah bagi platform streaming sehingga diharapkan dapat meningkatkan pengalaman pengguna dengan rekomendasi yang lebih personal dan sesuai selera.
 
 
 ## Refrensi
