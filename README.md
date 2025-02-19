@@ -37,35 +37,49 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
   
 ### Exploratory Data Analysis (EDA)
 
-#### Kondisi Data
-* Semua variabel berbentuk numerik dengan tipe data float64 (Open, High, Low, Close, Adj Close) dan int64 (Volume).
-* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 1692 non-null count.
+#### Kondisi Data movies.csv
+* variabel title dan genres memiliki tipe data object. Sementara variabel movieId bertipe data Integer.
+* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 9742 non-null count.
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
 
-![image](https://github.com/user-attachments/assets/bb780d32-3876-46cc-b56f-8a17960be6e5)
+
+![image](https://github.com/user-attachments/assets/6ee3980b-2f9c-4e63-b8ce-c826da1b5661)
+
+#### Kondisi Data ratings.csv
+* Semua variabel berbentuk numerik dengan tipe data int64 (userId, movieId, timestamp) dan int64 (rating).
+* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
+* Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+  
+![image](https://github.com/user-attachments/assets/d15aed6c-c5e0-4b9d-86fc-f62c7302f043)
 
 #### Statistika Deskriptif
-Berdasarkan statistik deskriptif, terdapat kemungkinan outlier pada kolom Volume, di mana nilai maksimum (37,163,900) jauh lebih besar dibandingkan kuartil ketiga (5,662,100). Oleh karena itu, pada tahap selanjutnya akan dilakukan pengecekan outliers
-  ![image](https://github.com/user-attachments/assets/d6607acf-9244-46b5-aaf8-7a10258764f3)
+Berdasarkan statistik deskriptif pada dataframe ratings.csv, variabel rating memiliki nilai terkecil 0.5 dan nilai terbesar 5, sehingga rentang nilai rating yang diberikan user antara 0.5 sampai dengan 5
+
+![image](https://github.com/user-attachments/assets/b3feb801-66b8-4d2f-b9e6-99004ea19331)
 
 
 
-- EDA
+
+#### Visualiasi Genre Film
+Berdasarkan visualisasi grafik batang di bawah. Dapat dilihat bahwa genres film terbanyak secara berurutan adalah genre Drama, Comedy, Thriller, Action, dst. Informasi ini dapat digunakan oleh perusahaan penyedia streaming film untuk merekomendasikan film dengan genre-genres tertentu yang memang paling disukai oleh pengguna.
+
 ![image](https://github.com/user-attachments/assets/db99222d-93d3-42e0-81fe-48bb35816704)
 
-- EDA
+#### Visualisasi Persebaran Nilai Rating
+Berdasarkan gambar persebaran nilai rating yang diberikan user, terlihat bahwa nilai terbanyak adalah nilai dengan rating 4. Kemudian, disusul dengan nilai rating 3. Sementara itu, nilai terkecil yang diberikan user adalah 0,5 dan nilai terbesar adalah 5.
 
 ![image](https://github.com/user-attachments/assets/7e1164c2-cd30-484e-85eb-55e57f30fe37)
 
 ## Data Preparation
-- Deteksi Outlier
-  ![image](https://github.com/user-attachments/assets/be12abff-9cc9-4441-b461-94ef576e0954)
+- Penggabungan Kedua Dataframe
+Pada tahap ini dilakukan penggabungan dua dataframe yaitu movies.csv dan ratings.csv (df2 dan df1) berdasarkan kolom movieId yang ada di kedua dataframe. Proses ini menggunakan metode penggabungan inner join, yang hanya akan menyertakan baris yang memiliki kecocokan pada kolom movieId di kedua dataframe. Hasilnya adalah dataframe baru df yang berisi informasi gabungan dari kedua dataframe tersebut
 
-  Berdasarkan visualisasi boxplot, terdapat outlier pada variabel Volume. Oleh karena itu, akan dilakukan pengecekan outlier tersebut. Kemudian, berikutnya outlier tersebut akan dihapus / didrop karena jumlahnya tidak begitu banyak sehingga tidak berpengaruh signifikan terhadap dataset yang ada
+![image](https://github.com/user-attachments/assets/f8916020-2fa8-448c-844e-8b7b494f5615)
 
-  ![image](https://github.com/user-attachments/assets/71a5201c-7e43-48c2-b3b4-86e70eec2b5a)
+- Pengecekan Missing Value
+Tidak ditemukan missing value pada dataframe hasil penggabungan ini
 
-  Penghapusan outliers dilakukan menggunakan metode IQR. Outlier berjumlah 80. Setelah dilakukan penghapusan baris data yang mengandung outliers, saat ini total baris data berjumlah 1612 dari sebelumnya berjumlah 1692 baris.
+![image](https://github.com/user-attachments/assets/a9819b3e-3ae2-4e97-bf14-ab03460ed573)
 
 
 - Pembagian Data Latih dan Uji
