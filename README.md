@@ -36,9 +36,6 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 - timestamp - Waktu ketika rating diberikan.
   
 ### Exploratory Data Analysis (EDA)
-#### Plot harga saham historis untuk melihat tren.
-
-![image](https://github.com/user-attachments/assets/71545ac0-de14-46c2-932b-1aa6f8c5b51c) ![image](https://github.com/user-attachments/assets/5652cc40-36da-40ec-9c3b-9b171efaddc2)
 
 #### Kondisi Data
 * Semua variabel berbentuk numerik dengan tipe data float64 (Open, High, Low, Close, Adj Close) dan int64 (Volume).
@@ -51,6 +48,14 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 Berdasarkan statistik deskriptif, terdapat kemungkinan outlier pada kolom Volume, di mana nilai maksimum (37,163,900) jauh lebih besar dibandingkan kuartil ketiga (5,662,100). Oleh karena itu, pada tahap selanjutnya akan dilakukan pengecekan outliers
   ![image](https://github.com/user-attachments/assets/d6607acf-9244-46b5-aaf8-7a10258764f3)
 
+
+
+- EDA
+![image](https://github.com/user-attachments/assets/db99222d-93d3-42e0-81fe-48bb35816704)
+
+- EDA
+
+![image](https://github.com/user-attachments/assets/7e1164c2-cd30-484e-85eb-55e57f30fe37)
 
 ## Data Preparation
 - Deteksi Outlier
