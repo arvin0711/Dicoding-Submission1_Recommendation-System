@@ -86,6 +86,7 @@ Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering men
 * Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
 * Dataframe ini terdiri dari 7 kolom dengan 100836 baris data.
+  
 ![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
 
 ### Variabel dalam dataframe hasil penggabungan:
@@ -154,9 +155,11 @@ Baris dan kolom dalam DataFrame ini mewakili judul film, sehingga setiap sel dal
 ![image](https://github.com/user-attachments/assets/e434e121-3621-4d39-83ea-85f515c8e128)
 #### Top-N Recommendation
 Sebagai contoh, akan diterapkan rekomendasi film yang mirip dengan judul film Dish, The (2001). Film Dist, The (2001) merupakan film dengan genres Comedy sehingga harapannya rekomendasi yang diberikan adalah film yang bergenre Comedy juga
+
 ![image](https://github.com/user-attachments/assets/54bb86ee-fa19-4e8c-899b-de76e80b89e7)
 
 Dapat dilihat bahwa sistem telah berhasil merekomendasikan top 10 film yang mirip dengan Dish, The (2001). Semua film yang direkomendasikan memiliki kategori Comedy yang berarti memiliki kesamaan genres dengan film Dish, The (2001)
+
 ![image](https://github.com/user-attachments/assets/18c91534-b17a-44c7-b5be-01b11d2c84b5)
 
 ### Collaborative Filtering
@@ -169,6 +172,7 @@ Selanjutnya, model memiliki lapisan Dense dengan 64 neuron yang berfungsi untuk 
 
 #### Top-N Recommendation
 Untuk memberikan rekomendasi film, sistem pertama-tama menerima ID pengguna dan memastikan bahwa ID tersebut sudah sesuai. Selanjutnya, sistem mengumpulkan daftar film yang sudah pernah ditonton oleh pengguna. Setelah itu, daftar film yang akan diprediksi dibuat dengan mengambil semua film yang tersedia, lalu menghapus film yang sudah ditonton agar hanya film baru yang direkomendasikan. ID film yang akan diprediksi kemudian diproses agar sesuai dengan format yang dibutuhkan. Sistem menggabungkan ID pengguna dengan ID film yang akan diprediksi dan menggunakannya untuk memperkirakan rating setiap film. Terakhir, sistem memilih 10 film dengan perkiraan rating tertinggi untuk direkomendasikan. Dengan pendekatan ini, rekomendasi yang diberikan lebih relevan karena didasarkan pada preferensi pengguna dan film yang belum pernah ditonton.
+
 ![image](https://github.com/user-attachments/assets/1a3b8b98-c975-4001-b887-f1d556db2270)
 
 Model berhasil memberikan rekomendasi film kepada user. Sebagai contoh, hasil di atas adalah rekomendasi untuk user dengan id 113. Dari output tersebut,dapat dibandingkan antara Film with high ratings from user dan Top 10 film recommendation untuk user. Dapat dilihat bahwa beberapa film rekomendasi memiliki genres yang sesuai dengan rating user.
