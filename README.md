@@ -3,7 +3,7 @@
 Proyek ini bertujuan untuk membangun sebuah sistem rekomendasi film menggunakan teknik content-based filtering dan collaborative filtering. Sistem rekomendasi ini akan memberikan saran film berdasarkan preferensi pengguna yang ada, menggunakan dataset yang mencakup data rating film dan metadata terkait film tersebut.
 
 ## Business Understanding
-Sistem rekomendasi film memiliki potensi untuk memberikan manfaat signifikan bagi platform streaming. Dengan sistem ini, platform dapat meningkatkan engagement pengguna dengan menyarankan film yang sesuai dengan selera mereka, serta memberikan rekomendasi yang lebih personal dan relevan. Studi sebelumnya menunjukkan bahwa sistem rekomendasi dapat meningkatkan kepuasan pengguna dan waktu yang dihabiskan dalam platform dengan memberikan saran yang lebih relevan berdasarkan analisis perilaku pengguna [3]. Selain itu, Implementasi sistem rekomendasi yang efisien juga dapat membantu platform streaming dalam memaksimalkan pendapatan dengan meningkatkan retensi pengguna [5].
+Sistem rekomendasi film memiliki potensi untuk memberikan manfaat signifikan bagi platform streaming. Dengan sistem ini, platform dapat meningkatkan engagement pengguna dengan menyarankan film yang sesuai dengan selera mereka, serta memberikan rekomendasi yang lebih personal dan relevan. Studi sebelumnya menunjukkan bahwa sistem rekomendasi dapat meningkatkan kepuasan pengguna dan waktu yang dihabiskan dalam platform dengan memberikan saran yang lebih relevan berdasarkan analisis perilaku pengguna [1]. Selain itu, Implementasi sistem rekomendasi yang efisien juga dapat membantu platform streaming dalam memaksimalkan pendapatan dengan meningkatkan retensi pengguna [2].
 ### Problem Statements
 1. Bagaimana cara membangun sistem rekomendasi yang merekomnedasikan pengguna berdasarkan genre film?
 2. Bagaimana cara membuat sistem rekomendasi untuk merekomendasikan film yang belum ditonton oleh pengguna berdasarkan data rating mereka?
@@ -80,6 +80,33 @@ Berdasarkan gambar persebaran nilai rating yang diberikan user, terlihat bahwa n
 
 
 ## Model Development Content Based Filtering
+### Membuat Dictionary Baru
+Pada tahap ini akan dibuat dictionary untuk menentukan pasangan key-value pada data movieId, title, dan genres yang telah disiapkan sebelumnya.
+
+![image](https://github.com/user-attachments/assets/3ece5b09-8846-4c05-817c-d5d2103284a6)
+
+### TF-IDF Vectorizer
+Pada tahap ini akan dibuat sistem rekomendasi sederhana berdasarkan jenis genre film menggunakan teknik TF-IDF Vectorizer yang menemukan representasi fitur penting dari setiap kategori genre film.
+
+![image](https://github.com/user-attachments/assets/b6175661-0d74-4195-bf85-d7a3301435fa)
+
+### Tranformasi Vektor TF-IDF ke Bentuk Matriks
+Selanjutnya, akan dilakukan fit dan transformasi vektor tf-idf ke dalam bentuk matriks.
+![image](https://github.com/user-attachments/assets/95bb2c29-0866-492e-a2a9-bacebb84b27b)
+
+![image](https://github.com/user-attachments/assets/6d29bc2c-f53b-4627-b4be-63716b3b0d37)
+
+Output matriks tf-idf di atas menunjukkan hubungan antara film dengan genrenya. Sebagai contoh, film dengan judul Dinner Game, The (Dîner de cons, Le) (1998) memiliki nilai matriks 1.0 pada kategori Comedy. Hal ini berarti film tersebut merupakan film dengan Genres Comedy. Sampai di sini, telah berhasil dilakukan proses identifikasi representasi fitur penting dari setiap kategori genres film dengan fungsi tfidvectorizer sehingga dihasilkan matriks korelasi antara judul film dan kategori genrenya.
+
+### Perhitungan Derajat Kesamaan
+Pada tahap ini akan dilakukan perhitungan derajat kesamaan antara satu film dengan film lain menggunakan cosine similarity untuk menghasilkan kandidat film yang memiliki kemiripan dan akan direkomendasikan kepada pengguna.
+
+![image](https://github.com/user-attachments/assets/e1796e60-109f-4c3f-9830-41f50c4bd207)
+
+### Pembuatan Dataframe Hasil Perhitungan Derajat Kesamaan
+Baris dan kolom dalam DataFrame ini mewakili judul film, sehingga setiap sel dalam DataFrame berisi nilai cosine similarity antara dua film. Nilai ini menunjukkan tingkat kesamaan antara satu film dengan film lainnya berdasarkan genre. setiap film akan memiliki skor kemiripan dengan semua film lain dalam dataset.
+
+![image](https://github.com/user-attachments/assets/e434e121-3621-4d39-83ea-85f515c8e128)
 
 
 
@@ -123,7 +150,7 @@ Pada tahap ini dilakukan pengecekan jumlah user dan film. Didapatkan bahwa jumla
 
 - Pembagian Data Latih dan Validasi
 
-Pada tahap ini dilakukan pembagian data menjadi data training dan validasi dengan proporsi 80:20. Namun, sebelum melakukan pembagian data training dan validasi perlu dilakukan penentuan variabel fitur dan target. Variabel fiturnya sendiri ada dua yaitu user dan movie. Sedangkan variabel target berupa rating film yang telah dinormalisasi dalam rentang 0 hingga 1 menggunakan Min-Max Scaling. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [2].
+Pada tahap ini dilakukan pembagian data menjadi data training dan validasi dengan proporsi 80:20. Namun, sebelum melakukan pembagian data training dan validasi perlu dilakukan penentuan variabel fitur dan target. Variabel fiturnya sendiri ada dua yaitu user dan movie. Sedangkan variabel target berupa rating film yang telah dinormalisasi dalam rentang 0 hingga 1 menggunakan Min-Max Scaling. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [3].
 
 ![image](https://github.com/user-attachments/assets/fc3620ed-92b8-4561-8170-b20b0cc4754f)
 
@@ -235,7 +262,9 @@ Model dengan pendekatan Content-Based Filtering dan Collaborative Filtering mamp
 
 
 ## Refrensi
-[3] C. P. Wijaya, "Systematic Literature Review pada Sistem Rekomendasi Film untuk Layanan Streaming," Jurnal Sistem Informasi, vol. 10, no. 1, pp. 30-40, 2024.
+[1] C. P. Wijaya, "Systematic Literature Review pada Sistem Rekomendasi Film untuk Layanan Streaming," Jurnal Sistem Informasi, vol. 10, no. 1, pp. 30-40, 2024.
 
-[5] F. Putra, "Sistem Rekomendasi untuk Maksimalisasi Industri Film dengan Metode Demographic Filtering dan Content-Based Filtering," Jurnal Teknologi dan Manajemen, vol. 8, no. 2, pp. 55-65, 2023.
+[2] F. Putra, "Sistem Rekomendasi untuk Maksimalisasi Industri Film dengan Metode Demographic Filtering dan Content-Based Filtering," Jurnal Teknologi dan Manajemen, vol. 8, no. 2, pp. 55-65, 2023.
+
+[3] J. Han, M. Kamber, and J. Pei, “Data Mining. Concepts and Techniques, 3rd Edition (The Morgan Kaufmann Series in Data Management Systems),” 2011.
 
