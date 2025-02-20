@@ -44,6 +44,7 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 * variabel title dan genres memiliki tipe data object. Sementara variabel movieId bertipe data Integer.
 * Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 9742 non-null count.
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+* Dataframe ini terdiri dari 3 kolom dengan 9742 baris data.
 
 
 ![image](https://github.com/user-attachments/assets/6ee3980b-2f9c-4e63-b8ce-c826da1b5661)
@@ -52,6 +53,7 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 * Semua variabel berbentuk numerik dengan tipe data int64 (userId, movieId, timestamp) dan int64 (rating).
 * Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+* Dataframe ini terdiri dari 4 kolom dengan 100836 baris data.
   
 ![image](https://github.com/user-attachments/assets/d15aed6c-c5e0-4b9d-86fc-f62c7302f043)
 
@@ -83,6 +85,7 @@ Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering men
 * Variabel userId, movieId, timestamp memiliki tipe data int64. Kemudian, variabel rating memiliki tipe data float64. Sedangkan, title dan genres bertipe data object
 * Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+* Dataframe ini terdiri dari 7 kolom dengan 100836 baris data.
 ![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
 
 ### Variabel dalam dataframe hasil penggabungan:
