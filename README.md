@@ -29,13 +29,17 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 - title - Judul film.
 - genres - Genre film (misalnya, aksi, drama, komedi, dll).
 
+![image](https://github.com/user-attachments/assets/799ce29e-fc8f-4462-993a-29d8be3edd8d)
+
 ### Variabel dalam file ratings.csv:
 - userId - ID unik untuk setiap pengguna yang memberikan rating.
 - movieId - ID film yang diberi rating oleh pengguna.
 - rating - Rating yang diberikan oleh pengguna
 - timestamp - Waktu ketika rating diberikan.
-  
-### Exploratory Data Analysis (EDA)
+
+![image](https://github.com/user-attachments/assets/93d414b1-01ea-46e7-b578-abcd048d9bda)
+
+## Data Preparation
 
 #### Kondisi Data movies.csv
 * variabel title dan genres memiliki tipe data object. Sementara variabel movieId bertipe data Integer.
@@ -70,39 +74,70 @@ Berdasarkan gambar persebaran nilai rating yang diberikan user, terlihat bahwa n
 
 ![image](https://github.com/user-attachments/assets/7e1164c2-cd30-484e-85eb-55e57f30fe37)
 
-## Data Preparation
-- Penggabungan Kedua Dataframe
-Pada tahap ini dilakukan penggabungan dua dataframe yaitu movies.csv dan ratings.csv (df2 dan df1) berdasarkan kolom movieId yang ada di kedua dataframe. Proses ini menggunakan metode penggabungan inner join, yang hanya akan menyertakan baris yang memiliki kecocokan pada kolom movieId di kedua dataframe. Hasilnya adalah dataframe baru df yang berisi informasi gabungan dari kedua dataframe tersebut
 
-![image](https://github.com/user-attachments/assets/f8916020-2fa8-448c-844e-8b7b494f5615)
+
+
+
+
+## Model Development Content Based Filtering
+
+# Collaborative Filterting
+
+## Data Preparation
+### Penggabungan Dataset  Movies.csv dan Ratings.csv
+Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering menggunakan data hasil penggabungan dari movies.csv dan ratings.csv. Oleh karena itu, dilakukan penggabungan dua dataframe yaitu movies.csv dan ratings.csv (df2 dan df1) berdasarkan kolom movieId yang ada di kedua dataframe. Proses ini menggunakan metode penggabungan inner join, yang hanya akan menyertakan baris yang memiliki kecocokan pada kolom movieId di kedua dataframe. Hasilnya adalah dataframe baru df yang berisi informasi gabungan dari kedua dataframe tersebut
+
+![image](https://github.com/user-attachments/assets/d572074b-b776-4315-bc7c-34465ed7b265)
+
+### Kondisi Data
+* Variabel userId, movieId, timestamp memiliki tipe data int64. Kemudian, variabel rating memiliki tipe data float64. Sedangkan, title dan genres bertipe data object
+* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
+* Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
 
 - Pengecekan Missing Value
 Tidak ditemukan missing value pada dataframe hasil penggabungan ini
 
 ![image](https://github.com/user-attachments/assets/a9819b3e-3ae2-4e97-bf14-ab03460ed573)
 
+- Encode fitur userId dan movieId
+  
+Pada tahap ini dilakukan persiapan data untuk menyandikan (encode) fitur userId dan movieId ke dalam indeks integer. Kemudian, dilakukan pemetaan userId dan movieId ke dalam dataframe yang berkaitan
+![image](https://github.com/user-attachments/assets/5f5a0c33-e3b4-44dc-ab52-2fb9bdbdbadf)
 
-- Pembagian Data Latih dan Uji
+- Pengecek Jumlah User dan Jumlah FIlm
+  
+Pada tahap ini dilakukan pengecekan jumlah user dan film. Didapatkan bahwa jumlah user adalah sebanyak 610 dan jumlah film sebanyak 9724. Selain itu, dilakukan pengecekan nilai minimum rating yang diberikan user yaitu 0.5 dan nilai maksimalnya 5
 
-Pada tahap ini dilakukan pembagian data menjadi menjadi dua bagian yaitu data latih dan data uji. Pembagian data latih dan data uji ini menggunakan  skenario 80:20. Skenario ini dirancang untuk menguji seberapa baik kemampuan model dalam memprediksi data yang belum pernah dilihat sebelumnya. Setelah pembagian data, dilakukan penentuan variabel fitur dan target. Variabel fitur terdiri dari kolom Open, High, Low, dan Volume, sedangkan variabel targetnya yaitu Close. 
-- Normalisasi
+![image](https://github.com/user-attachments/assets/801818dc-2cc6-4d19-805d-af03aed71026)
 
-Normalisasi adalah proses mengubah nilai-nilai dari suatu dataset ke dalam rentang nilai tertentu. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [2]. Selain itu, normalisasi juga akan mengurangi bias yang mungkin terjadi akibat perbedaan skala antar variabel. Dengan demikian, normalisasi sangat penting dalam pembuatan model karena dapat menghasilkan model yang lebih stabil dan akurat. Hasil normalisasi pada variabel fitur ditunjukkan pada gambar di bawah ini
+- Pembagian Data Latih dan Validasi
 
-![image](https://github.com/user-attachments/assets/a18ac943-5bc1-494e-99c6-af4881f5eddc)
+Pada tahap ini dilakukan pembagian data menjadi data training dan validasi dengan proporsi 80:20. Namun, sebelum melakukan pembagian data training dan validasi perlu dilakukan penentuan variabel fitur dan target. Variabel fiturnya sendiri ada dua yaitu user dan movie. Sedangkan variabel target berupa rating film yang telah dinormalisasi dalam rentang 0 hingga 1 menggunakan Min-Max Scaling. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [2].
 
-Sementara itu, untuk hasil normalisasi variabel target ditunjukkan gambar di bawah ini
-
-![image](https://github.com/user-attachments/assets/b553097d-c425-49df-8ae9-cc2d1b7a8806)
+![image](https://github.com/user-attachments/assets/fc3620ed-92b8-4561-8170-b20b0cc4754f)
 
 
-- Pembuatan Urutan Data Baru
 
-Setelah melakukan normalisasi data, tahap berikutnya adalah pembuatan urutan data baru menjadi ukuran 3 dimensi (samples, timesteps, jumlah fitur) agar sesuai dengan input yang diperlukan oleh model biLSTM. Timesteps digunakan untuk menentukan jumlah data masa lalu yang diperhitungkan dalam memprediksi satu nilai di masa depan. Pada tahap ini timesteps yang digunakan adalah 9 sehingga setiap prediksi di masa depan mempertimbangkan 9data di masa lalu. Pada Gambar di bawah ini ditunjukkan bahwa ukuran data latih dan data uji sudah berubah menjadi ukuran 3 dimensi.
 
-![image](https://github.com/user-attachments/assets/a50c404a-4a97-4c35-bb27-fcc4e3c3b660)
+## Model Development Collaborative Filtering
+Model neural network yang digunakan dalam sistem rekomendasi ini terdiri dari beberapa lapisan utama. Dua lapisan pertama adalah embedding layers yang digunakan untuk merepresentasikan ID pengguna dan ID film dalam bentuk vektor berdimensi 50. Output dari embedding layers ini kemudian diratakan menggunakan lapisan Flatten. Setelah itu, hasilnya digabungkan menggunakan lapisan Concatenate untuk menghasilkan representasi gabungan pengguna dan film.
 
-## Modeling
+Selanjutnya, model memiliki lapisan Dense dengan 64 neuron yang berfungsi untuk menangkap hubungan kompleks antara pengguna dan film. Untuk meningkatkan stabilitas pelatihan, model juga menggunakan lapisan normalisasi BatchNormalization serta lapisan Dropout untuk mencegah overfitting. Pada lapisan terakhir, model memiliki lapisan Dense dengan satu neuron keluaran yang berfungsi untuk memprediksi skor rekomendasi film bagi pengguna.
+
+![image](https://github.com/user-attachments/assets/d4ffd8be-2c9c-47d6-99ee-3076a628fc6d)
+
+### Visualisasi Metrik
+Berdasarkan plot grafik di bawah ini, proses training model cukup smooth dan model konvergen pada epoch sekitar 5.  Model menunjukkan kemampuan generalisasi yang baik, ditandai dengan perbedaan error yang sangat kecil antara data training dan validasi. Selain itu, tidak terdapat indikasi overfitting, karena kurva training dan validasi bergerak sejajar tanpa kesenjangan yang signifikan.
+
+![image](https://github.com/user-attachments/assets/24c917bc-f2fc-4260-8aed-c2196e6452ca)
+
+### Mendapatkan Rekomendasi Film
+Untuk memberikan rekomendasi film, sistem pertama-tama menerima ID pengguna dan memastikan bahwa ID tersebut sudah sesuai. Selanjutnya, sistem mengumpulkan daftar film yang sudah pernah ditonton oleh pengguna. Setelah itu, daftar film yang akan diprediksi dibuat dengan mengambil semua film yang tersedia, lalu menghapus film yang sudah ditonton agar hanya film baru yang direkomendasikan. ID film yang akan diprediksi kemudian diproses agar sesuai dengan format yang dibutuhkan. Sistem menggabungkan ID pengguna dengan ID film yang akan diprediksi dan menggunakannya untuk memperkirakan rating setiap film. Terakhir, sistem memilih 10 film dengan perkiraan rating tertinggi untuk direkomendasikan. Dengan pendekatan ini, rekomendasi yang diberikan lebih relevan karena didasarkan pada preferensi pengguna dan film yang belum pernah ditonton.
+![image](https://github.com/user-attachments/assets/1a3b8b98-c975-4001-b887-f1d556db2270)
+
+Model berhasil memberikan rekomendasi film kepada user. Sebagai contoh, hasil di atas adalah rekomendasi untuk user dengan id 113. Dari output tersebut,dapat dibandingkan antara Film with high ratings from user dan Top 10 film recommendation untuk user. Dapat dilihat bahwa beberapa film rekomendasi memiliki genres yang sesuai dengan rating user.
+
 
 
 ## Evaluation
@@ -160,13 +195,9 @@ fi = Nilai actual indeks pada periode ke-i
 
 Analisis Hasil Evaluasi Sistem Rekomendasi Collaborative Filtering :
 
-![image](https://github.com/user-attachments/assets/4f229875-a001-4c90-bbe5-296deeda00fa)
+![image](https://github.com/user-attachments/assets/6f812783-45a6-463f-8601-1f4fcbd9bc8e)
 
-- Berdasarkan plot grafik tersebut, proses training model cukup smooth dan model konvergen pada epoch sekitar 8.
-
-![image](https://github.com/user-attachments/assets/fa90674f-dd75-4c11-8ffe-43600ee85951)
-
-- Nilai error RMSE akhir pada data training sebesar 0.2023 dan error RMSE pada data validasi sebesar 0.2037. Nilai ini menunjukkan bahwa model memiliki generalisasi yang baik karena perbedaan error antara training dan validasi sangat kecil. 
+- Nilai error RMSE akhir pada data training sebesar 0.1973 dan error RMSE pada data validasi sebesar 0.2005. Nilai ini menunjukkan bahwa model memiliki generalisasi yang baik karena perbedaan error antara training dan validasi sangat kecil. 
 - Nilai RMSE yang rendah ini mengindikasikan bahwa rata-rata selisih antara prediksi model dan nilai rating asli cukup kecil, sehingga model dapat memberikan rekomendasi yang cukup akurat. Selain itu, tidak terdapat indikasi overfitting karena kurva training dan validasi berjalan sejajar tanpa ada kesenjangan yang signifikan.
 
 
