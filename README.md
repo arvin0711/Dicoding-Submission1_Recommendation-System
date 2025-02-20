@@ -85,7 +85,14 @@ Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering men
 * Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
 ![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
 
-
+### Variabel dalam dataframe hasil penggabungan:
+- movieId - ID unik untuk setiap film.
+- title - Judul film.
+- genres - Genre film (misalnya, aksi, drama, komedi, dll).
+- userId - ID unik untuk setiap pengguna yang memberikan rating.
+- movieId - ID film yang diberi rating oleh pengguna.
+- rating - Rating yang diberikan oleh pengguna
+- timestamp - Waktu ketika rating diberikan.
 
 #### Pengecek Jumlah User dan Jumlah FIlm
   
