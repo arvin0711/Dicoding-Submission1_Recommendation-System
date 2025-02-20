@@ -3,7 +3,7 @@
 Proyek ini bertujuan untuk membangun sebuah sistem rekomendasi film menggunakan teknik content-based filtering dan collaborative filtering. Sistem rekomendasi ini akan memberikan saran film berdasarkan preferensi pengguna yang ada, menggunakan dataset yang mencakup data rating film dan metadata terkait film tersebut.
 
 ## Business Understanding
-Sistem rekomendasi film memiliki potensi untuk memberikan manfaat signifikan bagi platform streaming. Dengan sistem ini, platform dapat meningkatkan engagement pengguna dengan menyarankan film yang sesuai dengan selera mereka, serta memberikan rekomendasi yang lebih personal dan relevan.
+Sistem rekomendasi film memiliki potensi untuk memberikan manfaat signifikan bagi platform streaming. Dengan sistem ini, platform dapat meningkatkan engagement pengguna dengan menyarankan film yang sesuai dengan selera mereka, serta memberikan rekomendasi yang lebih personal dan relevan. Studi sebelumnya menunjukkan bahwa sistem rekomendasi dapat meningkatkan kepuasan pengguna dan waktu yang dihabiskan dalam platform dengan memberikan saran yang lebih relevan berdasarkan analisis perilaku pengguna [3]. Selain itu, Implementasi sistem rekomendasi yang efisien juga dapat membantu platform streaming dalam memaksimalkan pendapatan dengan meningkatkan retensi pengguna [5].
 ### Problem Statements
 1. Bagaimana cara membangun sistem rekomendasi yang merekomnedasikan pengguna berdasarkan genre film?
 2. Bagaimana cara membuat sistem rekomendasi untuk merekomendasikan film yang belum ditonton oleh pengguna berdasarkan data rating mereka?
@@ -225,5 +225,7 @@ Model dengan pendekatan Content-Based Filtering dan Collaborative Filtering mamp
 
 
 ## Refrensi
+[3] C. P. Wijaya, "Systematic Literature Review pada Sistem Rekomendasi Film untuk Layanan Streaming," Jurnal Sistem Informasi, vol. 10, no. 1, pp. 30-40, 2024.
 
+[5] F. Putra, "Sistem Rekomendasi untuk Maksimalisasi Industri Film dengan Metode Demographic Filtering dan Content-Based Filtering," Jurnal Teknologi dan Manajemen, vol. 8, no. 2, pp. 55-65, 2023.
 
