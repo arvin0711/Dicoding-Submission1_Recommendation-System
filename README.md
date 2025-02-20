@@ -39,7 +39,6 @@ Dataset yang digunakan dalam proyek ini merupakan dataset film yang digunakan un
 
 ![image](https://github.com/user-attachments/assets/93d414b1-01ea-46e7-b578-abcd048d9bda)
 
-## Data Preparation
 
 #### Kondisi Data movies.csv
 * variabel title dan genres memiliki tipe data object. Sementara variabel movieId bertipe data Integer.
@@ -74,23 +73,39 @@ Berdasarkan gambar persebaran nilai rating yang diberikan user, terlihat bahwa n
 
 ![image](https://github.com/user-attachments/assets/7e1164c2-cd30-484e-85eb-55e57f30fe37)
 
+### Collaborative Filtering
+#### Penggabungan Dataset  Movies.csv dan Ratings.csv
+Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering menggunakan data hasil penggabungan dari movies.csv dan ratings.csv. Oleh karena itu, dilakukan penggabungan dua dataframe yaitu movies.csv dan ratings.csv (df2 dan df1) berdasarkan kolom movieId yang ada di kedua dataframe. Proses ini menggunakan metode penggabungan inner join, yang hanya akan menyertakan baris yang memiliki kecocokan pada kolom movieId di kedua dataframe. Hasilnya adalah dataframe baru df yang berisi informasi gabungan dari kedua dataframe tersebut
+
+![image](https://github.com/user-attachments/assets/d572074b-b776-4315-bc7c-34465ed7b265)
+
+#### Kondisi Data
+* Variabel userId, movieId, timestamp memiliki tipe data int64. Kemudian, variabel rating memiliki tipe data float64. Sedangkan, title dan genres bertipe data object
+* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
+* Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
+![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
 
 
 
+#### Pengecek Jumlah User dan Jumlah FIlm
+  
+Pada tahap ini dilakukan pengecekan jumlah user dan film. Didapatkan bahwa jumlah user adalah sebanyak 610 dan jumlah film sebanyak 9724. Selain itu, dilakukan pengecekan nilai minimum rating yang diberikan user yaitu 0.5 dan nilai maksimalnya 5
 
+![image](https://github.com/user-attachments/assets/801818dc-2cc6-4d19-805d-af03aed71026)
 
-## Model Development Content Based Filtering
-### Membuat Dictionary Baru
+## Data Preparation
+### Content Based Filtering
+#### Membuat Dictionary Baru
 Pada tahap ini akan dibuat dictionary untuk menentukan pasangan key-value pada data movieId, title, dan genres yang telah disiapkan sebelumnya.
 
 ![image](https://github.com/user-attachments/assets/3ece5b09-8846-4c05-817c-d5d2103284a6)
 
-### TF-IDF Vectorizer
+#### TF-IDF Vectorizer
 Pada tahap ini akan dibuat sistem rekomendasi sederhana berdasarkan jenis genre film menggunakan teknik TF-IDF Vectorizer yang menemukan representasi fitur penting dari setiap kategori genre film.
 
 ![image](https://github.com/user-attachments/assets/b6175661-0d74-4195-bf85-d7a3301435fa)
 
-### Tranformasi Vektor TF-IDF ke Bentuk Matriks
+#### Tranformasi Vektor TF-IDF ke Bentuk Matriks
 Selanjutnya, akan dilakukan fit dan transformasi vektor tf-idf ke dalam bentuk matriks.
 ![image](https://github.com/user-attachments/assets/95bb2c29-0866-492e-a2a9-bacebb84b27b)
 
@@ -98,82 +113,63 @@ Selanjutnya, akan dilakukan fit dan transformasi vektor tf-idf ke dalam bentuk m
 
 Output matriks tf-idf di atas menunjukkan hubungan antara film dengan genrenya. Sebagai contoh, film dengan judul Dinner Game, The (Dîner de cons, Le) (1998) memiliki nilai matriks 1.0 pada kategori Comedy. Hal ini berarti film tersebut merupakan film dengan Genres Comedy. Sampai di sini, telah berhasil dilakukan proses identifikasi representasi fitur penting dari setiap kategori genres film dengan fungsi tfidvectorizer sehingga dihasilkan matriks korelasi antara judul film dan kategori genrenya.
 
-### Perhitungan Derajat Kesamaan
+#### Perhitungan Derajat Kesamaan
 Pada tahap ini akan dilakukan perhitungan derajat kesamaan antara satu film dengan film lain menggunakan cosine similarity untuk menghasilkan kandidat film yang memiliki kemiripan dan akan direkomendasikan kepada pengguna.
 
 ![image](https://github.com/user-attachments/assets/e1796e60-109f-4c3f-9830-41f50c4bd207)
+### Collaborative Filtering
+#### Handling Missing Value 
+Tidak ditemukan missing value pada dataframe hasil penggabungan ini
 
+![image](https://github.com/user-attachments/assets/a9819b3e-3ae2-4e97-bf14-ab03460ed573)
+
+#### Encode fitur userId dan movieId
+  
+Pada tahap ini dilakukan persiapan data untuk menyandikan (encode) fitur userId dan movieId ke dalam indeks integer. Kemudian, dilakukan pemetaan userId dan movieId ke dalam dataframe yang berkaitan
+![image](https://github.com/user-attachments/assets/5f5a0c33-e3b4-44dc-ab52-2fb9bdbdbadf)
+
+
+
+#### Pembagian Data Latih dan Validasi
+
+Pada tahap ini dilakukan pembagian data menjadi data training dan validasi dengan proporsi 80:20. Namun, sebelum melakukan pembagian data training dan validasi perlu dilakukan penentuan variabel fitur dan target. Variabel fiturnya sendiri ada dua yaitu user dan movie. Sedangkan variabel target berupa rating film yang telah dinormalisasi dalam rentang 0 hingga 1 menggunakan Min-Max Scaling. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [3].
+
+![image](https://github.com/user-attachments/assets/fc3620ed-92b8-4561-8170-b20b0cc4754f)
+
+## Modeling
+### Content Based Filtering
 ### Pembuatan Dataframe Hasil Perhitungan Derajat Kesamaan
 Baris dan kolom dalam DataFrame ini mewakili judul film, sehingga setiap sel dalam DataFrame berisi nilai cosine similarity antara dua film. Nilai ini menunjukkan tingkat kesamaan antara satu film dengan film lainnya berdasarkan genre. setiap film akan memiliki skor kemiripan dengan semua film lain dalam dataset.
 
 ![image](https://github.com/user-attachments/assets/e434e121-3621-4d39-83ea-85f515c8e128)
-
-
-
-### Mendapatkan Rekomendasi Film
+#### Top-N Recommendation
 Sebagai contoh, akan diterapkan rekomendasi film yang mirip dengan judul film Dish, The (2001). Film Dist, The (2001) merupakan film dengan genres Comedy sehingga harapannya rekomendasi yang diberikan adalah film yang bergenre Comedy juga
 ![image](https://github.com/user-attachments/assets/54bb86ee-fa19-4e8c-899b-de76e80b89e7)
 
 Dapat dilihat bahwa sistem telah berhasil merekomendasikan top 10 film yang mirip dengan Dish, The (2001). Semua film yang direkomendasikan memiliki kategori Comedy yang berarti memiliki kesamaan genres dengan film Dish, The (2001)
 ![image](https://github.com/user-attachments/assets/18c91534-b17a-44c7-b5be-01b11d2c84b5)
 
-
-# Collaborative Filterting
-
-## Data Preparation
-### Penggabungan Dataset  Movies.csv dan Ratings.csv
-Dataset yang digunakan untuk model dengan pendekatan Collaborative Filtering menggunakan data hasil penggabungan dari movies.csv dan ratings.csv. Oleh karena itu, dilakukan penggabungan dua dataframe yaitu movies.csv dan ratings.csv (df2 dan df1) berdasarkan kolom movieId yang ada di kedua dataframe. Proses ini menggunakan metode penggabungan inner join, yang hanya akan menyertakan baris yang memiliki kecocokan pada kolom movieId di kedua dataframe. Hasilnya adalah dataframe baru df yang berisi informasi gabungan dari kedua dataframe tersebut
-
-![image](https://github.com/user-attachments/assets/d572074b-b776-4315-bc7c-34465ed7b265)
-
-### Kondisi Data
-* Variabel userId, movieId, timestamp memiliki tipe data int64. Kemudian, variabel rating memiliki tipe data float64. Sedangkan, title dan genres bertipe data object
-* Missing Value: Tidak ditemukan nilai yang hilang karena semua kolom memiliki 100836 non-null count.
-* Duplikasi: Tidak ada indikasi duplikasi berdasarkan informasi yang diberikan.
-![image](https://github.com/user-attachments/assets/2cef9fa1-c38e-4aa3-b37e-02f5b3ad0d4e)
-
-- Pengecekan Missing Value
-Tidak ditemukan missing value pada dataframe hasil penggabungan ini
-
-![image](https://github.com/user-attachments/assets/a9819b3e-3ae2-4e97-bf14-ab03460ed573)
-
-- Encode fitur userId dan movieId
-  
-Pada tahap ini dilakukan persiapan data untuk menyandikan (encode) fitur userId dan movieId ke dalam indeks integer. Kemudian, dilakukan pemetaan userId dan movieId ke dalam dataframe yang berkaitan
-![image](https://github.com/user-attachments/assets/5f5a0c33-e3b4-44dc-ab52-2fb9bdbdbadf)
-
-- Pengecek Jumlah User dan Jumlah FIlm
-  
-Pada tahap ini dilakukan pengecekan jumlah user dan film. Didapatkan bahwa jumlah user adalah sebanyak 610 dan jumlah film sebanyak 9724. Selain itu, dilakukan pengecekan nilai minimum rating yang diberikan user yaitu 0.5 dan nilai maksimalnya 5
-
-![image](https://github.com/user-attachments/assets/801818dc-2cc6-4d19-805d-af03aed71026)
-
-- Pembagian Data Latih dan Validasi
-
-Pada tahap ini dilakukan pembagian data menjadi data training dan validasi dengan proporsi 80:20. Namun, sebelum melakukan pembagian data training dan validasi perlu dilakukan penentuan variabel fitur dan target. Variabel fiturnya sendiri ada dua yaitu user dan movie. Sedangkan variabel target berupa rating film yang telah dinormalisasi dalam rentang 0 hingga 1 menggunakan Min-Max Scaling. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [3].
-
-![image](https://github.com/user-attachments/assets/fc3620ed-92b8-4561-8170-b20b0cc4754f)
-
-
-
-
-## Model Development Collaborative Filtering
+### Collaborative Filtering
+#### Pemodelan
 Model neural network yang digunakan dalam sistem rekomendasi ini terdiri dari beberapa lapisan utama. Dua lapisan pertama adalah embedding layers yang digunakan untuk merepresentasikan ID pengguna dan ID film dalam bentuk vektor berdimensi 50. Output dari embedding layers ini kemudian diratakan menggunakan lapisan Flatten. Setelah itu, hasilnya digabungkan menggunakan lapisan Concatenate untuk menghasilkan representasi gabungan pengguna dan film.
 
 Selanjutnya, model memiliki lapisan Dense dengan 64 neuron yang berfungsi untuk menangkap hubungan kompleks antara pengguna dan film. Untuk meningkatkan stabilitas pelatihan, model juga menggunakan lapisan normalisasi BatchNormalization serta lapisan Dropout untuk mencegah overfitting. Pada lapisan terakhir, model memiliki lapisan Dense dengan satu neuron keluaran yang berfungsi untuk memprediksi skor rekomendasi film bagi pengguna.
 
 ![image](https://github.com/user-attachments/assets/d4ffd8be-2c9c-47d6-99ee-3076a628fc6d)
 
-### Visualisasi Metrik
-Berdasarkan plot grafik di bawah ini, proses training model cukup smooth dan model konvergen pada epoch sekitar 5.  Model menunjukkan kemampuan generalisasi yang baik, ditandai dengan perbedaan error yang sangat kecil antara data training dan validasi. Selain itu, tidak terdapat indikasi overfitting, karena kurva training dan validasi bergerak sejajar tanpa kesenjangan yang signifikan.
-
-![image](https://github.com/user-attachments/assets/24c917bc-f2fc-4260-8aed-c2196e6452ca)
-
-### Mendapatkan Rekomendasi Film
+#### Top-N Recommendation
 Untuk memberikan rekomendasi film, sistem pertama-tama menerima ID pengguna dan memastikan bahwa ID tersebut sudah sesuai. Selanjutnya, sistem mengumpulkan daftar film yang sudah pernah ditonton oleh pengguna. Setelah itu, daftar film yang akan diprediksi dibuat dengan mengambil semua film yang tersedia, lalu menghapus film yang sudah ditonton agar hanya film baru yang direkomendasikan. ID film yang akan diprediksi kemudian diproses agar sesuai dengan format yang dibutuhkan. Sistem menggabungkan ID pengguna dengan ID film yang akan diprediksi dan menggunakannya untuk memperkirakan rating setiap film. Terakhir, sistem memilih 10 film dengan perkiraan rating tertinggi untuk direkomendasikan. Dengan pendekatan ini, rekomendasi yang diberikan lebih relevan karena didasarkan pada preferensi pengguna dan film yang belum pernah ditonton.
 ![image](https://github.com/user-attachments/assets/1a3b8b98-c975-4001-b887-f1d556db2270)
 
 Model berhasil memberikan rekomendasi film kepada user. Sebagai contoh, hasil di atas adalah rekomendasi untuk user dengan id 113. Dari output tersebut,dapat dibandingkan antara Film with high ratings from user dan Top 10 film recommendation untuk user. Dapat dilihat bahwa beberapa film rekomendasi memiliki genres yang sesuai dengan rating user.
+
+
+
+
+
+
+
+
 
 
 
@@ -231,6 +227,10 @@ fi = Nilai actual indeks pada periode ke-i
 
 
 Analisis Hasil Evaluasi Sistem Rekomendasi Collaborative Filtering :
+
+Berdasarkan plot grafik di bawah ini, proses training model cukup smooth dan model konvergen pada epoch sekitar 5.  Model menunjukkan kemampuan generalisasi yang baik, ditandai dengan perbedaan error yang sangat kecil antara data training dan validasi. Selain itu, tidak terdapat indikasi overfitting, karena kurva training dan validasi bergerak sejajar tanpa kesenjangan yang signifikan.
+
+![image](https://github.com/user-attachments/assets/24c917bc-f2fc-4260-8aed-c2196e6452ca)
 
 ![image](https://github.com/user-attachments/assets/6f812783-45a6-463f-8601-1f4fcbd9bc8e)
 
