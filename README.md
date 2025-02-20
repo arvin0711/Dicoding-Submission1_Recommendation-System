@@ -81,6 +81,16 @@ Berdasarkan gambar persebaran nilai rating yang diberikan user, terlihat bahwa n
 
 ## Model Development Content Based Filtering
 
+
+
+### Mendapatkan Rekomendasi Film
+Sebagai contoh, akan diterapkan rekomendasi film yang mirip dengan judul film Dish, The (2001). Film Dist, The (2001) merupakan film dengan genres Comedy sehingga harapannya rekomendasi yang diberikan adalah film yang bergenre Comedy juga
+![image](https://github.com/user-attachments/assets/54bb86ee-fa19-4e8c-899b-de76e80b89e7)
+
+Dapat dilihat bahwa sistem telah berhasil merekomendasikan top 10 film yang mirip dengan Dish, The (2001). Semua film yang direkomendasikan memiliki kategori Comedy yang berarti memiliki kesamaan genres dengan film Dish, The (2001)
+![image](https://github.com/user-attachments/assets/18c91534-b17a-44c7-b5be-01b11d2c84b5)
+
+
 # Collaborative Filterting
 
 ## Data Preparation
